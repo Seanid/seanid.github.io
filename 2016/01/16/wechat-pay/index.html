@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="现在，越来越多公司，选择借微信的势来发展自己的平台，进入工作没多久，我也被告知了要对接微信支付的需求。原本以为这样的对接，跟着文档走，应该没多大的难度的，可是后来，我才发现，原来我太天真了。在此，留下印记，说说我在微信支付上面遇到的那些问题。 1、关于微信支付首先说下微信支付。随着微信的红火，微信支付在第三方支付也占了一大块地盘，越来越多的公司在自己的APP或者网站上集成了微信支付。从微信支付的官">
+<meta name="keywords" content="微信">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信支付-我遇到的那些问题">
+<meta property="og:url" content="http://yoursite.com/2016/01/16/wechat-pay/index.html">
+<meta property="og:site_name" content="Sean blogs">
+<meta property="og:description" content="现在，越来越多公司，选择借微信的势来发展自己的平台，进入工作没多久，我也被告知了要对接微信支付的需求。原本以为这样的对接，跟着文档走，应该没多大的难度的，可是后来，我才发现，原来我太天真了。在此，留下印记，说说我在微信支付上面遇到的那些问题。 1、关于微信支付首先说下微信支付。随着微信的红火，微信支付在第三方支付也占了一大块地盘，越来越多的公司在自己的APP或者网站上集成了微信支付。从微信支付的官">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://image.e65535.com/wecha-pay-time.jpg">
+<meta property="og:image" content="http://image.e65535.com/wechat-pay-sign.png">
+<meta property="og:updated_time" content="2016-05-15T14:04:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微信支付-我遇到的那些问题">
+<meta name="twitter:description" content="现在，越来越多公司，选择借微信的势来发展自己的平台，进入工作没多久，我也被告知了要对接微信支付的需求。原本以为这样的对接，跟着文档走，应该没多大的难度的，可是后来，我才发现，原来我太天真了。在此，留下印记，说说我在微信支付上面遇到的那些问题。 1、关于微信支付首先说下微信支付。随着微信的红火，微信支付在第三方支付也占了一大块地盘，越来越多的公司在自己的APP或者网站上集成了微信支付。从微信支付的官">
+<meta name="twitter:image" content="http://image.e65535.com/wecha-pay-time.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/01/16/wechat-pay/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>微信支付-我遇到的那些问题 | Sean blogs</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sean blogs</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-首页">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-首页"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-github">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-github"></i> <br>github</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-归档">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-归档"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/16/wechat-pay/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sean Huang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sean blogs">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">微信支付-我遇到的那些问题
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2016-01-16 21:27:47" itemprop="dateCreated datePublished" datetime="2016-01-16T21:27:47+08:00">2016-01-16</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2016-05-15 22:04:20" itemprop="dateModified" datetime="2016-05-15T22:04:20+08:00">2016-05-15</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>现在，越来越多公司，选择借微信的势来发展自己的平台，进入工作没多久，我也被告知了要对接微信支付的需求。原本以为这样的对接，跟着文档走，应该没多大的难度的，可是后来，我才发现，原来我太天真了。在此，留下印记，说说我在微信支付上面遇到的那些问题。</p>
+<h4 id="1、关于微信支付"><a href="#1、关于微信支付" class="headerlink" title="1、关于微信支付"></a>1、关于微信支付</h4><p>首先说下微信支付。随着微信的红火，微信支付在第三方支付也占了一大块地盘，越来越多的公司在自己的APP或者网站上集成了微信支付。从微信支付的官网 <a href="https://pay.weixin.qq.com/index.php/home/login?return_url=/" target="_blank" rel="noopener">微信支付官方文档</a> 可以看出，微信支付主要分为四大块，公众号支付、APP支付、扫码支付（网站）、刷卡支付。工作上，我接触到了前三种，遇到了各种各样的问题。</p>
+<h4 id="2、关于官方文档"><a href="#2、关于官方文档" class="headerlink" title="2、关于官方文档"></a>2、关于官方文档</h4><p>对于开发者来说，对接这种第三方支付，看其官方文档尤其重要。开发者可以通过官网，查到对应不同支付模块的官方文档，但是，请大家注意，该文档有待完善，完全照着文档做，可能实现不了你的功能</p>
+<h4 id="3、微信支付流程"><a href="#3、微信支付流程" class="headerlink" title="3、微信支付流程"></a>3、微信支付流程</h4><p><img src="http://image.e65535.com/wecha-pay-time.jpg" alt="微信流程图"></p>
+<p><br><br><br>微信支付的流程，在微信支付官网上也有所显示，这里更加泛化的说一下，其实微信支付需要的是集成了微信SDK的客户端，客户先通过客户端浏览完成订单，然后后台首先在业务系统生成了订单，订单生成后，业务系统请求微信服务器，进行统一下单。统一下单完成后，微信返回相关信息，后台就可以形成相应的支付二维码或者是封装出可以调起微信支付需要的信息。接下来，用户只要通过扫一扫或者点击确认支付，便可以调出微信支付。支付成功后，微信会给用户发送信息，同时也会对业务系统指定的地址发送对应的回调信息，将支付结果告知微信。同时，微信支付信息也可以通过后台直接请求微信支付来进行确认。</p>
+<h4 id="4、微信支付相关"><a href="#4、微信支付相关" class="headerlink" title="4、微信支付相关"></a>4、微信支付相关</h4><p>首先，微信支付有一个最重要的过程，就是统一下单，简单的说，开发者需要将业务系统中的订单信息发送给微信，让微信后台形成在微信那边的一个支付订单。在向微信请求的时候，传送的数据为xml格式，微信要求xml传送的数据需要进行一次加密，然后将加密的字符串附加在xml中一起传输到服务器端，服务器端验证通过之后才能进行下订单操作。具体的算法说明地址 <a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=4_3" target="_blank" rel="noopener">微信支付验签算法</a></p>
+<p>以下，是基于java实现的加密算法：</p>
+<pre><code>public static String signature(Map&lt;String, String&gt; map, String key) {
+   Set&lt;String&gt; keySet = map.keySet();
+   String[] str = new String[map.size()];
+   StringBuilder tmp = new StringBuilder();
+   str = keySet.toArray(str);
+   Arrays.sort(str);
+   for (int i = 0; i &lt; str.length; i++) {
+      String t = str[i] + &quot;=&quot; + map.get(str[i]) + &quot;&amp;&quot;;
+      tmp.append(t);
+   }
+   if (StringUtils.isNotBlank(key)) {
+      tmp.append(&quot;key=&quot; + key);
+   }
+   String tosend = tmp.toString();
+   MessageDigest md = null;
+   byte[] bytes = null;
+   try {
+
+      md = MessageDigest.getInstance(&quot;MD5&quot;);
+      bytes = md.digest(tosend.getBytes(&quot;utf-8&quot;));
+   } catch (Exception e) {
+      e.printStackTrace();
+   }
+
+   String singe = byteToStr(bytes);
+   return singe.toUpperCase();
+
+}
+</code></pre><p>微信支付第一个问题，数据加密的key。这个坑在于不细心，微信支付有很多key，包括我们微信绑定时候自己输入的key，还有微信给的随机字符key，而这里，在用于加密的key，并不是我们微信公众号中的 AppSecret，而是在微信支付商户后台设置的key，设置的位置为： key设置路径：微信商户平台(pay.weixin.qq.com)–&gt;账户设置–&gt;API安全–&gt;密钥设置 如果不是使用该Key，哪怕是你的算法写对了，数据传到用户那里，依然返回的是签名错误。</p>
+<p>PS：微信官方给出了一个验证签名准确性的工具，该工具地址为 <a href="https://pay.weixin.qq.com/wiki/tools/signverify/" target="_blank" rel="noopener">微信验签工具</a>，AnyWay，正如刚才说了，如果key设置的不正确，比如说使用了AppSecret ，那么，你会发现，该工具的出的加密字符串和自己得出的一模一样，然后当你发送给微信服务端的时候，永远返回的是错误。</p>
+<p>微信支付第二个问题，post编码问题。当组装好数据后，需要通过POST的形式向微信服务器发送数据。可是，问题来了，微信的数据封装的完全正确，key也设置正确了，在官方的验证工具上验证出来也是正确的，可是，微信总是提示签名错误。这个问题出现在post请求的编码问题上，遇到这个问题的情况是，在封装数据的时候，xml里面加入了中文，然后每次请求就会报错，可是如果中文去掉，下单成功。最后才发现，原来POST的时候，没有设置编码，设置成为UTF8之后就没事了。可是，返回的签名错误，也真心难排查啊</p>
+<p>微信支付第三个问题，js-sdk调起支付控件。这一步时讲在微信里面H5调起支付控件的。需要注意的是要在H5上面调出支付控件，第一件事需要在微信公众要后台添加指定域名允许该域名调起控件，否则，是不能调起的。设置的教程在这:<a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_3" target="_blank" rel="noopener">微信js-sdk调起教程</a> 。</p>
+<p>设置完成之后，接下来是通过js调起，在此吐槽一下，我第一次做的时候，是直接copy的官方的js下来改的，可是。。。。。。。官方的JS上面全角半角的字符混合，导致的别说是他的JS了，就是我自己写的JS最后都没调出来。。。。。然后，关于提示，，苹果版还好，安卓版的微信，如果调不出控件，它一点反应都不会有的。。相对而言，苹果版会有一个弹框提示，所以后期，只要出现问题，都先用苹果测测看看出了什么错。</p>
+<p>微信支付第四个问题，app端数据封装。能够统一下单了，这样一来就是对数据封装返回给前端了，这一部，还是需要进行签名，按理来说，前面和前面采用的是同样的方法，应该问题不大才对。确实，在web端和扫码支付都没多大问题，可是，app端问题来了。我在公司刚开始和安卓的同事调这个的时候，本来以为一个下午能搞定了。可是，却不如我们所想。我们全部采用的是官方给的要求进行封装的数据，我后台统一下单完成之后，给到安卓，结果安卓死活调不出支付控件，而且一直都返回-1的结果，该结果，可以说一点用处都没有。安卓端的同时调了好久，一直没有找到解决方案，值得一说的是，它官方给的Demo是可以调出结果界面，可是也是调不出支付控件的。而且，他的java文件，utf-8和GBK两种编码混在一起的。最后说一下，为啥app调不出支付控件。</p>
+<p><img src="http://image.e65535.com/wechat-pay-sign.png" alt="微信验签参数图"></p>
+<pre><code>//网页调起的时候
+String time = Long.toString(System.currentTimeMillis());
+back.put(&quot;appId&quot;, mchappid);
+back.put(&quot;timeStamp&quot;, time);
+back.put(&quot;nonceStr&quot;, &quot;5K8264ILTKCH16CQ2502SI8ZNMTM67VS&quot;);
+back.put(&quot;package&quot;, &quot;prepay_id=&quot; + order.getPrepay_id());
+back.put(&quot;signType&quot;, &quot;MD5&quot;);
+String sign2 = SignatureUtils.signature(back, wx_key);
+
+JSONObject jsonObject = new JSONObject();
+jsonObject.put(&quot;appId&quot;, mchappid);
+jsonObject.put(&quot;timeStamp&quot;, time);
+jsonObject.put(&quot;nonceStr&quot;, &quot;5K8264ILTKCH16CQ2502SI8ZNMTM67VS&quot;);
+jsonObject.put(&quot;package&quot;, &quot;prepay_id=&quot; + order.getPrepay_id());
+jsonObject.put(&quot;signType&quot;, &quot;MD5&quot;);
+jsonObject.put(&quot;paySign&quot;, sign2);
+
+result.put(&quot;status&quot;, &quot;success&quot;);
+result.put(&quot;msg&quot;, &quot;下单成功&quot;);
+result.put(&quot;obj&quot;, jsonObject);
+return result;
+</code></pre><hr>
+<pre><code>//APP调起的时候,请注意，安卓端不能用驼峰法，所有的key必须使用小写
+String time = Long.toString(System.currentTimeMillis());
+back.put(&quot;appid&quot;, app_mchappid);
+back.put(&quot;timestamp&quot;, time);
+back.put(&quot;partnerid&quot;, app_mchid);
+back.put(&quot;noncestr&quot;, &quot;5K8264ILTKCH16CQ2502SI8ZNMTM67VS&quot;);
+back.put(&quot;prepayid&quot;, order.getPrepay_id());
+back.put(&quot;package&quot;, &quot;Sign=WXPay&quot;);
+String sign2 = SignatureUtils.signature(back, wx_key);
+
+JSONObject jsonObject = new JSONObject();
+jsonObject.put(&quot;appid&quot;, app_mchappid);
+jsonObject.put(&quot;timestamp&quot;, time);
+jsonObject.put(&quot;partnerid&quot;, app_mchid);
+jsonObject.put(&quot;noncestr&quot;, &quot;5K8264ILTKCH16CQ2502SI8ZNMTM67VS&quot;);
+jsonObject.put(&quot;prepayid&quot;, order.getPrepay_id());
+//jsonObject.put(&quot;package&quot;, &quot;Sign=WXPay&quot;);
+jsonObject.put(&quot;sign&quot;, sign2);
+result.put(&quot;status&quot;, &quot;success&quot;);
+result.put(&quot;msg&quot;, &quot;下单成功&quot;);
+result.put(&quot;obj&quot;, jsonObject);
+return result;
+</code></pre><p>如图，为微信官方文档中安卓调起支付控件的示例代码，接下来为web端调起支付控件时候进行加密的算法，最后为解决问题后返回给APP数据时候数据封装的代码。问题所在就是在于，它数据的封装不像官网所说的使用驼峰法，app的时候，需要把所有的字符小写，，，小写，，，，，，，。还有，官方说的packageValue是错的，要用package，就是因为这些错，加密出来的数据是错的，所以app端才调不出支付控件。在此，为我那个调到奔溃的同事默哀。</p>
+<p>至今为止遇到的问题大致如上，做下笔记，同时希望对同为开发的朋友有用<br>最后，附上本人在github上的一个基于java的微信支付后台Demo <a href="https://github.com/Seanid/wechatPay" target="_blank" rel="noopener">简单的微信支付案例</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/微信/" rel="tag"># 微信</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/09/computer-ie8-bug/" rel="next" title="计算机安装了IE8一半退出重启时，桌面只显示背景">
+                <i class="fa fa-chevron-left"></i> 计算机安装了IE8一半退出重启时，桌面只显示背景
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/26/mysql-oracle-groupby/" rel="prev" title="mysql与oracle在groupby语句上的细节差异">
+                mysql与oracle在groupby语句上的细节差异 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Sean Huang</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、关于微信支付"><span class="nav-number">1.</span> <span class="nav-text">1、关于微信支付</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、关于官方文档"><span class="nav-number">2.</span> <span class="nav-text">2、关于官方文档</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、微信支付流程"><span class="nav-number">3.</span> <span class="nav-text">3、微信支付流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、微信支付相关"><span class="nav-number">4.</span> <span class="nav-text">4、微信支付相关</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sean Huang</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.1"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
