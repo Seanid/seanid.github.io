@@ -107,7 +107,7 @@
 <meta property="og:description" content="[职场挖矿]基于cookie的多系统登录公司：HJSD职位：Java开发工程师项目代号：G简介G项目是在HJSD接触的第一个项目，是一个年长且功能强大的业务项目，子系统10+个，包含了数据采集、任务调度、报表展示、业务管理等一系列的功能。各个子系统公用一套用户体系，用户一次注册/登录即可实现系统间的相互切换 分析一个项目多个子系统，在项目进行到后期是比较常见的情况。解决多系统之间授权的方式也有很多">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2019/04/20/images/cookie-sso.jpg">
-<meta property="og:updated_time" content="2019-04-21T08:03:33.471Z">
+<meta property="og:updated_time" content="2019-04-22T01:24:21.511Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于cookie的多系统登录">
 <meta name="twitter:description" content="[职场挖矿]基于cookie的多系统登录公司：HJSD职位：Java开发工程师项目代号：G简介G项目是在HJSD接触的第一个项目，是一个年长且功能强大的业务项目，子系统10+个，包含了数据采集、任务调度、报表展示、业务管理等一系列的功能。各个子系统公用一套用户体系，用户一次注册/登录即可实现系统间的相互切换 分析一个项目多个子系统，在项目进行到后期是比较常见的情况。解决多系统之间授权的方式也有很多">
@@ -370,7 +370,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-04-21 16:03:33" itemprop="dateModified" datetime="2019-04-21T16:03:33+08:00">2019-04-21</time>
+                <time title="Modified: 2019-04-22 09:24:21" itemprop="dateModified" datetime="2019-04-22T09:24:21+08:00">2019-04-22</time>
               
             
           </span>
@@ -428,6 +428,15 @@
 <li>cookie存在安全性的问题，容易被cookie伪造实现系统登录（实操过^_^）</li>
 </ol>
 <p>虽然说有局限，可是如果是用在内部系统，在设置白名单的情况下，这种方式不失为一种节省资源的多系统解决方案</p>
+<p>如何解决cookie安全问题？</p>
+<p>虽然cookie的安全性问题没法根治，但如果必要的措施可以让安全问题没那么高</p>
+<ol>
+<li>对cookie进行加密解密</li>
+<li>限制多系统之间授权的方式，即A系统要登录B系统，需要通过一个特殊的页面进行授权跳转才行，这个页面在系统内部，没法通过外部访问</li>
+<li>多个系统用多个加密授权的cookie，防止仅使用一个授权cookie</li>
+<li>对用户的最后访问路径进行监控，因为访问的路径修改的频率较高，进行cookie窃取没法窃取最新的（仅限参考）</li>
+</ol>
+<p>最后，除了一些已经稳定运行，迭代了多次的老项目，还是采用更安全的方式吧</p>
 <hr>
 <h4 id="点滴知识，源于思考"><a href="#点滴知识，源于思考" class="headerlink" title="点滴知识，源于思考"></a>点滴知识，源于思考</h4>
       
