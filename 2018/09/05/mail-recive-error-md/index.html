@@ -98,28 +98,28 @@
 
 
 
-  <meta name="description" content="前言之所以去纠那么细节的问题，是因为之前有过一个这样的场景： 有个同学，给了一条数据库的语句给我，问，为啥这样子的语句在oracle语句下执行不了。 select * from xx where xxx is not null group by yy; 拿到这条语句的第一时间，其实，我也并没有看出是什么错。仔细一想之后才想起，在基础的SQL中包含该group by的select语句，select语">
-<meta name="keywords" content="数据库">
+  <meta name="description" content="前言最近突发奇想，想做一个个人的邮件爬虫，分析自己订阅的信息（技术订阅，信用卡账单等）。为了找到更好的解决方案，就提前复习了一下关于Mail收发协议的一些知识。同时在JavaMail之上封装了一个类库，结合网易邮箱做了一系列的测试，于是就有了接下来的内容。本文主要围绕网易邮箱设置的限制展开。 本来，如果使用POP3进行文件的收取，就还是蛮顺利的。可是POP3的缺点非常明显，不能定向收取指定文件夹中">
 <meta property="og:type" content="article">
-<meta property="og:title" content="mysql与oracle在groupby语句上的细节差异">
-<meta property="og:url" content="http://yoursite.com/2016/05/26/mysql-oracle-groupby/index.html">
+<meta property="og:title" content="通过IMAP定向收取网易邮箱邮件(疑难)">
+<meta property="og:url" content="http://yoursite.com/2018/09/05/mail-recive-error-md/index.html">
 <meta property="og:site_name" content="Sean blogs">
-<meta property="og:description" content="前言之所以去纠那么细节的问题，是因为之前有过一个这样的场景： 有个同学，给了一条数据库的语句给我，问，为啥这样子的语句在oracle语句下执行不了。 select * from xx where xxx is not null group by yy; 拿到这条语句的第一时间，其实，我也并没有看出是什么错。仔细一想之后才想起，在基础的SQL中包含该group by的select语句，select语">
+<meta property="og:description" content="前言最近突发奇想，想做一个个人的邮件爬虫，分析自己订阅的信息（技术订阅，信用卡账单等）。为了找到更好的解决方案，就提前复习了一下关于Mail收发协议的一些知识。同时在JavaMail之上封装了一个类库，结合网易邮箱做了一系列的测试，于是就有了接下来的内容。本文主要围绕网易邮箱设置的限制展开。 本来，如果使用POP3进行文件的收取，就还是蛮顺利的。可是POP3的缺点非常明显，不能定向收取指定文件夹中">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://image.e65535.com/2016-05-26_150320.png">
-<meta property="og:image" content="http://image.e65535.com/2016-05-26_225620.jpg">
-<meta property="og:updated_time" content="2016-05-26T15:23:28.000Z">
+<meta property="og:image" content="http://yoursite.com/2018/09/05/images/126-mail-error.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/09/05/images/126-mail-error2.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/09/05/images/126-mail-error3.jpg">
+<meta property="og:updated_time" content="2019-04-27T08:10:29.028Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="mysql与oracle在groupby语句上的细节差异">
-<meta name="twitter:description" content="前言之所以去纠那么细节的问题，是因为之前有过一个这样的场景： 有个同学，给了一条数据库的语句给我，问，为啥这样子的语句在oracle语句下执行不了。 select * from xx where xxx is not null group by yy; 拿到这条语句的第一时间，其实，我也并没有看出是什么错。仔细一想之后才想起，在基础的SQL中包含该group by的select语句，select语">
-<meta name="twitter:image" content="http://image.e65535.com/2016-05-26_150320.png">
+<meta name="twitter:title" content="通过IMAP定向收取网易邮箱邮件(疑难)">
+<meta name="twitter:description" content="前言最近突发奇想，想做一个个人的邮件爬虫，分析自己订阅的信息（技术订阅，信用卡账单等）。为了找到更好的解决方案，就提前复习了一下关于Mail收发协议的一些知识。同时在JavaMail之上封装了一个类库，结合网易邮箱做了一系列的测试，于是就有了接下来的内容。本文主要围绕网易邮箱设置的限制展开。 本来，如果使用POP3进行文件的收取，就还是蛮顺利的。可是POP3的缺点非常明显，不能定向收取指定文件夹中">
+<meta name="twitter:image" content="http://yoursite.com/2018/09/05/images/126-mail-error.jpg">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/05/26/mysql-oracle-groupby/">
+  <link rel="canonical" href="http://yoursite.com/2018/09/05/mail-recive-error-md/">
 
 
 
@@ -129,7 +129,7 @@
   };
 </script>
 
-  <title>mysql与oracle在groupby语句上的细节差异 | Sean blogs</title>
+  <title>通过IMAP定向收取网易邮箱邮件(疑难) | Sean blogs</title>
   
 
 
@@ -311,7 +311,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/26/mysql-oracle-groupby/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/05/mail-recive-error-md/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sean Huang">
@@ -328,7 +328,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">mysql与oracle在groupby语句上的细节差异
+          <h1 class="post-title" itemprop="name headline">通过IMAP定向收取网易邮箱邮件(疑难)
 
               
             
@@ -354,12 +354,24 @@
                 
               
 
-              <time title="Created: 2016-05-26 23:22:16 / Modified: 23:23:28" itemprop="dateCreated datePublished" datetime="2016-05-26T23:22:16+08:00">2016-05-26</time>
+              <time title="Created: 2018-09-05 16:03:01" itemprop="dateCreated datePublished" datetime="2018-09-05T16:03:01+08:00">2018-09-05</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-04-27 16:10:29" itemprop="dateModified" datetime="2019-04-27T16:10:29+08:00">2019-04-27</time>
               
             
           </span>
@@ -393,17 +405,31 @@
       
 
       
-        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>之所以去纠那么细节的问题，是因为之前有过一个这样的场景：</p>
-<p>有个同学，给了一条数据库的语句给我，问，为啥这样子的语句在oracle语句下执行不了。</p>
-<pre><code>select * from xx where xxx is not null group by yy;
-</code></pre><p>拿到这条语句的第一时间，其实，我也并没有看出是什么错。仔细一想之后才想起，在基础的SQL中包含该group by的select语句，select语句部分是有限制的，一般是聚合函数和group by 的字段。随后，我就告诉他，这条语句本身是有错的。</p>
-<p>然而，我同学却反驳说，这条语句他在其他数据库中是能运行的。然后，就有了这篇博客</p>
-<h4 id="细说"><a href="#细说" class="headerlink" title="细说"></a>细说</h4><p>为了询证，我询问了同学他说能运行的数据库是什么数据库。结果同学说是mysql。</p>
-<p><img src="http://image.e65535.com/2016-05-26_150320.png" alt="oracle 下的执行情况"></p>
-<p><img src="http://image.e65535.com/2016-05-26_225620.jpg" alt="mysql 下的执行情况"></p>
-<p>如图所示，相同类型的语句，在oracle和mysql执行，一个是可以正常运行的，而在oracle上，却是没能通过语句的校验。为啥呢？</p>
-<p>回过头看看，现在市场上的关系型数据库可谓不少，其实他们都在SQL语句的解析上，都遵循着SQL国际标准，只是各自遵循的严格程度不同而已，同时，各个数据库也在SQL标准上扩展开了，有了自己支持的特色的数据库语句，如mysql的limit。也就是这样，才有了上述情况。SQL标准中，其实在包含group by 的 select 语句能查询的数据是有限制的。Oracle比较严格的遵守了这一限制，而mysql 则并没有，这样才使得使用惯了mysql的朋友在刚开始的时候有这样的错觉，觉得明明正确的语句为啥就是执行不了。</p>
-<h4 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h4><p>在标准这方面，要论对错，其实是没必要的。很多时候，标准制定出来，只是一种美好的期望而已。然而，作为技术，其实应该的更多的是回归本质，更多的了解原理，就不会因为某个工具并没严格要求的东西，养成不良的习惯。</p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近突发奇想，想做一个个人的邮件爬虫，分析自己订阅的信息（技术订阅，信用卡账单等）。为了找到更好的解决方案，就提前复习了一下关于Mail收发协议的一些知识。同时在JavaMail之上封装了一个类库，结合网易邮箱做了一系列的测试，于是就有了接下来的内容。本文主要围绕网易邮箱设置的限制展开。</p>
+<p>本来，如果使用POP3进行文件的收取，就还是蛮顺利的。可是POP3的缺点非常明显，不能定向收取指定文件夹中的邮件，这个缺点明显不符合需求，所以果断放弃，选择使用IMAP进行收取。</p>
+<p>因为IMAP能够操作的功能比较多，也被各大邮件服务提供商做了安全限制，网易也不例外，所以就有了以下问题。</p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><ol>
+<li>问题一：NO Select Unsafe Login. Please contact kefu</li>
+</ol>
+<p>这个问题往往伴随以下这个邮件</p>
+<p><img src="../images/126-mail-error.jpg" alt></p>
+<p><del>，刚开是以为是因为没有给邮箱设置安全密码（第三方登陆单独使用密码），可是设置后仍然无效</del></p>
+<p>最后查出的问题，这个问题是网易邮箱所特有的，原因在于，网易为了推广自身产品-网易邮箱大师，所以拦截了其他第三方请求。</p>
+<p>解决方案：<a href>http://config.mail.163.com/settings/imap/index.jsp?uid=xxxxxxx@163.com</a> 通过这个地址，阅读网易的安全协议，表示同意承担信息丢失的风险后，网易就会开发IMAP的协议接口了。</p>
+<p><img src="../images/126-mail-error2.jpg" alt="126"></p>
+<ol start="2">
+<li>问题二：邮件数量限制，日期限制</li>
+</ol>
+<p>正式开始测试后，总是发现收取的邮件数目不对。主要反映为两点，1、返回的邮件数目和在网页查看的邮件数目对不上，2、有部分很久前存在的文件夹，一直收取不到邮件，但是也不报错。</p>
+<p>解决方案：网易默认限制了客户端只能够收取近30天内的邮件，需要通过设置，将权限放开。</p>
+<p><img src="../images/126-mail-error3.jpg" alt></p>
+<h1 id="TIPS"><a href="#TIPS" class="headerlink" title="TIPS"></a>TIPS</h1><p>国内常用邮件服务商对IMAP的支持</p>
+<ul>
+<li>126/163：允许通过IMAP获取自定义的文件夹，但是需要开通授权</li>
+<li>QQ ：只允许获取QQ定义的文件夹，自定义无法获取</li>
+<li>coremail ： 支持获取自定义文件夹，无需授权</li>
+</ul>
+<h3 id="广告"><a href="#广告" class="headerlink" title="广告"></a>广告</h3><p><a href="https://github.com/Seanid/luckycode-mail" target="_blank" rel="noopener">JavaMail二次封装库</a></p>
 
       
     </div>
@@ -425,12 +451,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/数据库/" rel="tag"># 数据库</a>
-          
-        </div>
-      
 
       
       
@@ -440,8 +460,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/01/16/wechat-pay/" rel="next" title="微信支付-我遇到的那些问题">
-                <i class="fa fa-chevron-left"></i> 微信支付-我遇到的那些问题
+              <a href="/2017/01/15/ssl-excepiton/" rel="next" title="[工作笔记]JDK版本不同导致的SSL异常">
+                <i class="fa fa-chevron-left"></i> [工作笔记]JDK版本不同导致的SSL异常
               </a>
             
           </div>
@@ -450,8 +470,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/07/24/ideaj-maven/" rel="prev" title="在IDEAJ中使用maven遇到的一些坑">
-                在IDEAJ中使用maven遇到的一些坑 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/04/20/sso-cookie/" rel="prev" title="基于cookie的多系统登录">
+                基于cookie的多系统登录 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -584,7 +604,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#细说"><span class="nav-number">2.</span> <span class="nav-text">细说</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思考"><span class="nav-number">3.</span> <span class="nav-text">思考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题"><span class="nav-number">2.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TIPS"><span class="nav-number">3.</span> <span class="nav-text">TIPS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#广告"><span class="nav-number">3.0.1.</span> <span class="nav-text">广告</span></a></li></ol></li></ol></div>
             
 
           </div>
