@@ -98,28 +98,27 @@
 
 
 
-  <meta name="description" content="前言之所以去纠那么细节的问题，是因为之前有过一个这样的场景： 有个同学，给了一条数据库的语句给我，问，为啥这样子的语句在oracle语句下执行不了。 select * from xx where xxx is not null group by yy; 拿到这条语句的第一时间，其实，我也并没有看出是什么错。仔细一想之后才想起，在基础的SQL中包含该group by的select语句，select语">
-<meta name="keywords" content="数据库">
+  <meta name="description" content="微信js-sdk，是微信提供给网页开发设计者使用的，在页面上使用部分微信功能的SDK。关于它的文档，可以通过微信公众平台上获取获取微信JS-Sdk文档 关于如何开发，其实在微信的文档上面已经说得蛮清楚的了，只要按照文档来，大概就能够调得出自己想要的功能了。 调起微信js-sdk，可以分为两个部分，配置部分和编码部分。 配置部分，需要开发者登录到微信公众平台上，对能够进行js-sdk调起的域名进行授">
+<meta name="keywords" content="微信">
 <meta property="og:type" content="article">
-<meta property="og:title" content="mysql与oracle在groupby语句上的细节差异">
-<meta property="og:url" content="http://yoursite.com/2016/05/26/mysql-oracle-groupby/index.html">
+<meta property="og:title" content="微信js-sdk调用">
+<meta property="og:url" content="http://yoursite.com/2016/01/22/js-sdk-help/index.html">
 <meta property="og:site_name" content="Sean blogs">
-<meta property="og:description" content="前言之所以去纠那么细节的问题，是因为之前有过一个这样的场景： 有个同学，给了一条数据库的语句给我，问，为啥这样子的语句在oracle语句下执行不了。 select * from xx where xxx is not null group by yy; 拿到这条语句的第一时间，其实，我也并没有看出是什么错。仔细一想之后才想起，在基础的SQL中包含该group by的select语句，select语">
+<meta property="og:description" content="微信js-sdk，是微信提供给网页开发设计者使用的，在页面上使用部分微信功能的SDK。关于它的文档，可以通过微信公众平台上获取获取微信JS-Sdk文档 关于如何开发，其实在微信的文档上面已经说得蛮清楚的了，只要按照文档来，大概就能够调得出自己想要的功能了。 调起微信js-sdk，可以分为两个部分，配置部分和编码部分。 配置部分，需要开发者登录到微信公众平台上，对能够进行js-sdk调起的域名进行授">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://image.e65535.com/2016-05-26_150320.png">
-<meta property="og:image" content="http://image.e65535.com/2016-05-26_225620.jpg">
-<meta property="og:updated_time" content="2016-05-26T15:23:28.000Z">
+<meta property="og:image" content="http://image.e65535.com/js-sdk-api.png">
+<meta property="og:updated_time" content="2019-04-29T06:33:38.385Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="mysql与oracle在groupby语句上的细节差异">
-<meta name="twitter:description" content="前言之所以去纠那么细节的问题，是因为之前有过一个这样的场景： 有个同学，给了一条数据库的语句给我，问，为啥这样子的语句在oracle语句下执行不了。 select * from xx where xxx is not null group by yy; 拿到这条语句的第一时间，其实，我也并没有看出是什么错。仔细一想之后才想起，在基础的SQL中包含该group by的select语句，select语">
-<meta name="twitter:image" content="http://image.e65535.com/2016-05-26_150320.png">
+<meta name="twitter:title" content="微信js-sdk调用">
+<meta name="twitter:description" content="微信js-sdk，是微信提供给网页开发设计者使用的，在页面上使用部分微信功能的SDK。关于它的文档，可以通过微信公众平台上获取获取微信JS-Sdk文档 关于如何开发，其实在微信的文档上面已经说得蛮清楚的了，只要按照文档来，大概就能够调得出自己想要的功能了。 调起微信js-sdk，可以分为两个部分，配置部分和编码部分。 配置部分，需要开发者登录到微信公众平台上，对能够进行js-sdk调起的域名进行授">
+<meta name="twitter:image" content="http://image.e65535.com/js-sdk-api.png">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/05/26/mysql-oracle-groupby/">
+  <link rel="canonical" href="http://yoursite.com/2016/01/22/js-sdk-help/">
 
 
 
@@ -129,7 +128,7 @@
   };
 </script>
 
-  <title>mysql与oracle在groupby语句上的细节差异 | Sean blogs</title>
+  <title>微信js-sdk调用 | Sean blogs</title>
   
 
 
@@ -311,7 +310,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/26/mysql-oracle-groupby/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/22/js-sdk-help/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sean Huang">
@@ -328,7 +327,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">mysql与oracle在groupby语句上的细节差异
+          <h1 class="post-title" itemprop="name headline">微信js-sdk调用
 
               
             
@@ -354,12 +353,24 @@
                 
               
 
-              <time title="Created: 2016-05-26 23:22:16 / Modified: 23:23:28" itemprop="dateCreated datePublished" datetime="2016-05-26T23:22:16+08:00">2016-05-26</time>
+              <time title="Created: 2016-01-22 23:14:42" itemprop="dateCreated datePublished" datetime="2016-01-22T23:14:42+08:00">2016-01-22</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-04-29 14:33:38" itemprop="dateModified" datetime="2019-04-29T14:33:38+08:00">2019-04-29</time>
               
             
           </span>
@@ -393,17 +404,70 @@
       
 
       
-        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>之所以去纠那么细节的问题，是因为之前有过一个这样的场景：</p>
-<p>有个同学，给了一条数据库的语句给我，问，为啥这样子的语句在oracle语句下执行不了。</p>
-<pre><code>select * from xx where xxx is not null group by yy;
-</code></pre><p>拿到这条语句的第一时间，其实，我也并没有看出是什么错。仔细一想之后才想起，在基础的SQL中包含该group by的select语句，select语句部分是有限制的，一般是聚合函数和group by 的字段。随后，我就告诉他，这条语句本身是有错的。</p>
-<p>然而，我同学却反驳说，这条语句他在其他数据库中是能运行的。然后，就有了这篇博客</p>
-<h4 id="细说"><a href="#细说" class="headerlink" title="细说"></a>细说</h4><p>为了询证，我询问了同学他说能运行的数据库是什么数据库。结果同学说是mysql。</p>
-<p><img src="http://image.e65535.com/2016-05-26_150320.png" alt="oracle 下的执行情况"></p>
-<p><img src="http://image.e65535.com/2016-05-26_225620.jpg" alt="mysql 下的执行情况"></p>
-<p>如图所示，相同类型的语句，在oracle和mysql执行，一个是可以正常运行的，而在oracle上，却是没能通过语句的校验。为啥呢？</p>
-<p>回过头看看，现在市场上的关系型数据库可谓不少，其实他们都在SQL语句的解析上，都遵循着SQL国际标准，只是各自遵循的严格程度不同而已，同时，各个数据库也在SQL标准上扩展开了，有了自己支持的特色的数据库语句，如mysql的limit。也就是这样，才有了上述情况。SQL标准中，其实在包含group by 的 select 语句能查询的数据是有限制的。Oracle比较严格的遵守了这一限制，而mysql 则并没有，这样才使得使用惯了mysql的朋友在刚开始的时候有这样的错觉，觉得明明正确的语句为啥就是执行不了。</p>
-<h4 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h4><p>在标准这方面，要论对错，其实是没必要的。很多时候，标准制定出来，只是一种美好的期望而已。然而，作为技术，其实应该的更多的是回归本质，更多的了解原理，就不会因为某个工具并没严格要求的东西，养成不良的习惯。</p>
+        <p>微信js-sdk，是微信提供给网页开发设计者使用的，在页面上使用部分微信功能的SDK。关于它的文档，可以通过微信公众平台上获取获取<a href="http://mp.weixin.qq.com/wiki/11/74ad127cc054f6b80759c40f77ec03db.html" target="_blank" rel="noopener">微信JS-Sdk文档</a></p>
+<p>关于如何开发，其实在微信的文档上面已经说得蛮清楚的了，只要按照文档来，大概就能够调得出自己想要的功能了。</p>
+<p>调起微信js-sdk，可以分为两个部分，配置部分和编码部分。</p>
+<p>配置部分，需要开发者登录到微信公众平台上，对能够进行js-sdk调起的域名进行授权，只有通过授权的域名，才能调起。主要的配置在 公众号设置”的“功能设置”里填写“JS接口安全域名”。设置完成后，在需要调起的页面，导入微信官方给出的js  <a href="https://res.wx.qq.com/open/js/jweixin-1.0.0.js，前期的工作就大部分完成了。" target="_blank" rel="noopener">https://res.wx.qq.com/open/js/jweixin-1.0.0.js，前期的工作就大部分完成了。</a></p>
+<p>编码部分主要分为前端编码和后台编码，因为微信的js-sdk调起的时候，需要向微信服务器传一些验签的参数，而这些参数，在微信官方是推荐由后台进行加密后再传回前端的。</p>
+<p>在开始编码之前，首先了解一下从用户使用开始，到调起js-sdk进行操作得当整个流程：</p>
+<p><img src="http://image.e65535.com/js-sdk-api.png" alt="微信流程"></p>
+<p><br><br>大致的流程如图所示，用户通过微信客户端访问程序员开发的H5页面，该页面要调起js-sdk的某些功能，则需要在页面加载完成之后，首先请求企业的服务器，申请入appscrte等参数，然后将参数填入wx.config()函数中，该函数主要确定该页面是否可以调起js-sdk，该函数执行完成之后，默认会调用wx.ready()，如果需要页面加载完成后立马调起js-sdk的话，需要将调用的代码放在wx.ready()中。如果不需要，就只需要在根据情况在页面上出发对应的js-sdk提供的函数即可。每个函数，都会有对应的成功与失败的回调函数，前端通过该函数，来实现对应的结果展示就行了。</p>
+<p>在这个过程中，前端所需要做的，其实就是根据需求来调起微信js-sdk中的函数。前端重中之中在于页面加载完成之后的wx.config()接入，而后台的任务则是根据微信的算法，对参数进行加密，然后将数据打包返回给前端。</p>
+<p>调起js-sdk所后台需要做的可以分为以下几步：</p>
+<ul>
+<li>通过请求微信服务器获取 access_token</li>
+<li>通过 access_token获取到调起js-sdk所需要用到的 jsapi_ticket；</li>
+<li>将 noncestr（随机字符串）， jsapi_ticket， timestamp(时间错)， url（调起js-sdk的网址）四个参数进行排序并加密生产一串加密字符</li>
+<li>将appId（公众号的唯一标识）， timestamp， nonceStr:，signature（签名）返回给前端</li>
+</ul>
+<p>具体需要涉及到的算法如下：</p>
+<pre><code>public static String signatureSHA1(Map&lt;String, String&gt; map) {
+
+    Set&lt;String&gt; keySet = map.keySet();
+
+    String[] str = new String[map.size()];
+
+    StringBuilder tmp = new StringBuilder();
+
+    // 进行字典排序
+
+    str = keySet.toArray(str);
+
+    Arrays.sort(str);
+
+    for (int i = 0; i &lt; str.length; i++) {
+
+        String t = str[i] + &quot;=&quot; + map.get(str[i]) + &quot;&amp;&quot;;
+
+        tmp.append(t);
+
+    }
+
+    String tosend = tmp.toString().substring(0, tmp.length() - 1);
+
+    MessageDigest md = null;
+
+    byte[] bytes = null;
+
+    try {
+
+        md = MessageDigest.getInstance(&quot;SHA-1&quot;);
+
+        bytes = md.digest(tosend.getBytes(&quot;utf-8&quot;));
+
+    } catch (Exception e) {
+
+        e.printStackTrace();
+
+    }
+
+    String singe = byteToStr(bytes);
+
+    return singe.toLowerCase();
+
+}
+</code></pre><p>需要注意的是，在前端进行调试的过程中，苹果版的微信会在调出js-sdk出错的时候弹出更加详细的信息，而安卓版有时候只是没反应，连信息都不会弹出，所以建议如果确定后台算法正确的情况下，可以在苹果的微信下进行调试。</p>
+<p>具体的项目实例可以看<a href="https://github.com/Seanid/wechatPay中页面调起微信支付部分" target="_blank" rel="noopener">https://github.com/Seanid/wechatPay中页面调起微信支付部分</a></p>
 
       
     </div>
@@ -427,7 +491,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/数据库/" rel="tag"># 数据库</a>
+            <a href="/tags/微信/" rel="tag"># 微信</a>
           
         </div>
       
@@ -440,8 +504,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/01/22/js-sdk-help/" rel="next" title="微信js-sdk调用">
-                <i class="fa fa-chevron-left"></i> 微信js-sdk调用
+              <a href="/2016/01/16/wechat-pay/" rel="next" title="微信支付-我遇到的那些问题">
+                <i class="fa fa-chevron-left"></i> 微信支付-我遇到的那些问题
               </a>
             
           </div>
@@ -450,8 +514,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/07/24/ideaj-maven/" rel="prev" title="在IDEAJ中使用maven遇到的一些坑">
-                在IDEAJ中使用maven遇到的一些坑 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/05/26/mysql-oracle-groupby/" rel="prev" title="mysql与oracle在groupby语句上的细节差异">
+                mysql与oracle在groupby语句上的细节差异 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -496,17 +560,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -573,23 +628,6 @@
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#细说"><span class="nav-number">2.</span> <span class="nav-text">细说</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思考"><span class="nav-number">3.</span> <span class="nav-text">思考</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       

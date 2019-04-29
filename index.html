@@ -1357,6 +1357,224 @@ git push origin master
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/22/js-sdk-help/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sean Huang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sean blogs">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2016/01/22/js-sdk-help/" class="post-title-link" itemprop="url">微信js-sdk调用</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2016-01-22 23:14:42" itemprop="dateCreated datePublished" datetime="2016-01-22T23:14:42+08:00">2016-01-22</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-04-29 14:33:38" itemprop="dateModified" datetime="2019-04-29T14:33:38+08:00">2019-04-29</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>微信js-sdk，是微信提供给网页开发设计者使用的，在页面上使用部分微信功能的SDK。关于它的文档，可以通过微信公众平台上获取获取<a href="http://mp.weixin.qq.com/wiki/11/74ad127cc054f6b80759c40f77ec03db.html" target="_blank" rel="noopener">微信JS-Sdk文档</a></p>
+<p>关于如何开发，其实在微信的文档上面已经说得蛮清楚的了，只要按照文档来，大概就能够调得出自己想要的功能了。</p>
+<p>调起微信js-sdk，可以分为两个部分，配置部分和编码部分。</p>
+<p>配置部分，需要开发者登录到微信公众平台上，对能够进行js-sdk调起的域名进行授权，只有通过授权的域名，才能调起。主要的配置在 公众号设置”的“功能设置”里填写“JS接口安全域名”。设置完成后，在需要调起的页面，导入微信官方给出的js  <a href="https://res.wx.qq.com/open/js/jweixin-1.0.0.js，前期的工作就大部分完成了。" target="_blank" rel="noopener">https://res.wx.qq.com/open/js/jweixin-1.0.0.js，前期的工作就大部分完成了。</a></p>
+<p>编码部分主要分为前端编码和后台编码，因为微信的js-sdk调起的时候，需要向微信服务器传一些验签的参数，而这些参数，在微信官方是推荐由后台进行加密后再传回前端的。</p>
+<p>在开始编码之前，首先了解一下从用户使用开始，到调起js-sdk进行操作得当整个流程：</p>
+<p><img src="http://image.e65535.com/js-sdk-api.png" alt="微信流程"></p>
+<p><br><br>大致的流程如图所示，用户通过微信客户端访问程序员开发的H5页面，该页面要调起js-sdk的某些功能，则需要在页面加载完成之后，首先请求企业的服务器，申请入appscrte等参数，然后将参数填入wx.config()函数中，该函数主要确定该页面是否可以调起js-sdk，该函数执行完成之后，默认会调用wx.ready()，如果需要页面加载完成后立马调起js-sdk的话，需要将调用的代码放在wx.ready()中。如果不需要，就只需要在根据情况在页面上出发对应的js-sdk提供的函数即可。每个函数，都会有对应的成功与失败的回调函数，前端通过该函数，来实现对应的结果展示就行了。</p>
+<p>在这个过程中，前端所需要做的，其实就是根据需求来调起微信js-sdk中的函数。前端重中之中在于页面加载完成之后的wx.config()接入，而后台的任务则是根据微信的算法，对参数进行加密，然后将数据打包返回给前端。</p>
+<p>调起js-sdk所后台需要做的可以分为以下几步：</p>
+<ul>
+<li>通过请求微信服务器获取 access_token</li>
+<li>通过 access_token获取到调起js-sdk所需要用到的 jsapi_ticket；</li>
+<li>将 noncestr（随机字符串）， jsapi_ticket， timestamp(时间错)， url（调起js-sdk的网址）四个参数进行排序并加密生产一串加密字符</li>
+<li>将appId（公众号的唯一标识）， timestamp， nonceStr:，signature（签名）返回给前端</li>
+</ul>
+<p>具体需要涉及到的算法如下：</p>
+<pre><code>public static String signatureSHA1(Map&lt;String, String&gt; map) {
+
+    Set&lt;String&gt; keySet = map.keySet();
+
+    String[] str = new String[map.size()];
+
+    StringBuilder tmp = new StringBuilder();
+
+    // 进行字典排序
+
+    str = keySet.toArray(str);
+
+    Arrays.sort(str);
+
+    for (int i = 0; i &lt; str.length; i++) {
+
+        String t = str[i] + &quot;=&quot; + map.get(str[i]) + &quot;&amp;&quot;;
+
+        tmp.append(t);
+
+    }
+
+    String tosend = tmp.toString().substring(0, tmp.length() - 1);
+
+    MessageDigest md = null;
+
+    byte[] bytes = null;
+
+    try {
+
+        md = MessageDigest.getInstance(&quot;SHA-1&quot;);
+
+        bytes = md.digest(tosend.getBytes(&quot;utf-8&quot;));
+
+    } catch (Exception e) {
+
+        e.printStackTrace();
+
+    }
+
+    String singe = byteToStr(bytes);
+
+    return singe.toLowerCase();
+
+}
+</code></pre><p>需要注意的是，在前端进行调试的过程中，苹果版的微信会在调出js-sdk出错的时候弹出更加详细的信息，而安卓版有时候只是没反应，连信息都不会弹出，所以建议如果确定后台算法正确的情况下，可以在苹果的微信下进行调试。</p>
+<p>具体的项目实例可以看<a href="https://github.com/Seanid/wechatPay中页面调起微信支付部分" target="_blank" rel="noopener">https://github.com/Seanid/wechatPay中页面调起微信支付部分</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/16/wechat-pay/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1922,168 +2140,13 @@ return result;
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2013/10/10/about/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sean Huang">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sean blogs">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2013/10/10/about/" class="post-title-link" itemprop="url">关于博客</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2013-10-10 22:43:35" itemprop="dateCreated datePublished" datetime="2013-10-10T22:43:35+08:00">2013-10-10</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-10-10 23:01:22" itemprop="dateModified" datetime="2018-10-10T23:01:22+08:00">2018-10-10</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>接触博客，应该是从我开始学计算机开始吧。那时候，偶尔会将自己学习的一些东西发布上网。发布的方式有很多种，刚开始实在QQ空间，后来接触的很多平台都有博客，于是乎经常是想起了哪个账号，就把东西发布到哪个平台去，所以有过很多个博客，如新浪、网易、博客园……</p>
-<p>很多时候，文章写完后就直接发布了，不在乎其中的对错，不去做后续的维护。后面偶尔点击进去，发现原来有人批评过我。也有些时候，打开邮件时发现有人给我留下感谢的话语，说我的经验帮他们解决了问题。每当看到这些，总想着，不管好坏，自己写过的东西，至少还是有点存在感的吧！于是乎呢，开始自己维护自己的博客了。</p>
-<p>不知道在哪个博主哪里看过这样一句话：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">所谓的博客，都是孤芳自赏</span><br></pre></td></tr></table></figure>
-<p>如果真是这样，我想一直自赏下去，哈哈~~</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
 
 
           </div>
@@ -2123,7 +2186,7 @@ return result;
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
